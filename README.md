@@ -22,8 +22,15 @@ A simple Python console application for managing student records.
 2. Run:
 
 ```bash
-python StudentManager.py
+python cli.py
 ```
+
+## Project Structure
+
+- `cli.py` handles user interaction
+- `service.py` contains the application logic
+- `repository.py` handles JSON persistence
+- `models.py` defines the domain objects
 
 ## Data File
 
