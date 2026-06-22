@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Huzaifa Rao",
+        "age": 21,
+        "grade": 95.0
+    },
+    {
+        "id": 3,
+        "name": "Mansoor Khan",
+        "age": 22,
+        "grade": 93.0
+    }
+]
