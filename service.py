@@ -1,5 +1,20 @@
 from repository import StudentRepository
 from models import Student
+from constants import (
+    MSG_ID_EXISTS, 
+    MSG_STUDENT_ADDED, 
+    MSG_STUDENT_NOT_FOUND,
+    MSG_STUDENT_REMOVED, 
+    MSG_STUDENT_UPDATED, 
+    MSG_NO_STUDENTS_TO_SORT,
+    MSG_SORTED,
+    MSG_UPDATING,
+    PROMPT_NEW_NAME,
+    PROMPT_NEW_AGE,
+    PROMPT_NEW_GRADE,
+    MSG_INVALID_FIELD_VALUE
+)
+
 
 class StudentService:
     def __init__(self, repository):
@@ -8,12 +23,12 @@ class StudentService:
 
     def add_student(self, student_id, name, age, grade):
         if any(s.student_id == student_id for s in self.students):
-            print("A student with this id already exists")
+            print(MSG_ID_EXISTS)
             return False
 
         self.students.append(Student(name, age, student_id, grade))
         self.repository.save_students(self.students)
-        print("Student added successfully")
+        print(MSG_STUDENT_ADDED)
         return True
 
     def get_all_students(self):
@@ -22,24 +37,32 @@ class StudentService:
     def update_student(self, student_id):
         for s in self.students:
             if s.student_id == student_id:
-                print(f"Updating data for {s.name} (Leave blank if you don't want to change)")
+                print(MSG_UPDATING.format(s.name))
 
-                new_name = input(f"Enter new name [{s.name}]: ")
-                if new_name:
-                    s.name = new_name
+                updatable_fields = {
+                    "name": str,
+                    "age": int,
+                    "grade": float
+                }
 
-                new_age = input(f"New Age [{s.age}]: ")
-                if new_age:
-                    s.age = int(new_age)
-
-                new_grade = input(f"New Grade [{s.grade}]: ")
-                if new_grade:
-                    s.grade = float(new_grade)
+                for field, data_type in updatable_fields.items():
+                    current_value = getattr(s, field)
+                    prompt = f"Enter new {field} [{current_value}]: "
+                    
+                    new_value = input(prompt).strip()
+                    
+                    if new_value:
+                        try:
+                            converted_value = data_type(new_value)
+                            setattr(s, field, converted_value)
+                        except ValueError:
+                            print(MSG_INVALID_FIELD_VALUE.format(field))  # ← Now using constant
 
                 self.repository.save_students(self.students)
-                print("Student updated successfully.")
+                print(MSG_STUDENT_UPDATED)
                 return True
-        print("Error: Student ID not found.")
+        
+        print(MSG_STUDENT_NOT_FOUND)
         return False
 
     def delete_student(self, student_id):
@@ -48,10 +71,10 @@ class StudentService:
 
         if len(self.students) < initial_count:
             self.repository.save_students(self.students)
-            print("Student removed successfully.")
+            print(MSG_STUDENT_REMOVED)
             return True
         else:
-            print("Error: Student ID not found.")
+            print(MSG_STUDENT_NOT_FOUND)
             return False
 
     def get_top_students(self, threshold=85):
@@ -59,8 +82,9 @@ class StudentService:
 
     def sort_students(self):
         if not self.students:
-            print("No students to sort.")
+            print(MSG_NO_STUDENTS_TO_SORT)
             return
+        
         self.students.sort(key=lambda s: s.grade, reverse=True)
         self.repository.save_students(self.students)
-        print("Roster sorted by highest grade first.")
+        print(MSG_SORTED)

@@ -10,5 +10,11 @@
         "name": "Mansoor Khan",
         "age": 22,
         "grade": 93.0
+    },
+    {
+        "id": 2,
+        "name": "Soban Ahmad ",
+        "age": 21,
+        "grade": 70.0
     }
 ]

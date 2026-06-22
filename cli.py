@@ -1,88 +1,96 @@
 from repository import StudentRepository
 from service import StudentService
+from constants import (
+    MENU_TITLE, MENU_ADD, MENU_VIEW, MENU_UPDATE, MENU_DELETE,
+    MENU_SORT, MENU_TOP, MENU_EXIT, PROMPT_CHOICE, MSG_NO_STUDENTS,
+    MSG_INVALID_CHOICE, MSG_SHUTDOWN, MSG_ID_NOT_NUMBER,MSG_NO_TOP_STUDENTS,
+    MSG_AGE_GRADE_ERROR, DISPLAY_HEADER, DISPLAY_TOP_HEADER,
+    PROMPT_STUDENT_ID, PROMPT_REMOVE_ID, PROMPT_NAME, PROMPT_AGE, PROMPT_GRADE
+)
+
 
 def main():
     repo = StudentRepository()
     service = StudentService(repo)
 
     while True:
-        print("\n---------------- Student Management System ---------------------")
-        print("1. Add Student")
-        print("2. View Roster")
-        print("3. Update Student")
-        print("4. Remove Student")
-        print("5. Sort Roster by Grade (Lambda)")
-        print("6. Show Top Students (Comprehension)")
-        print("7. Exit")
+        print(MENU_TITLE)
+        print(MENU_ADD)
+        print(MENU_VIEW)
+        print(MENU_UPDATE)
+        print(MENU_DELETE)
+        print(MENU_SORT)
+        print(MENU_TOP)
+        print(MENU_EXIT)
 
-        choice = input("Select an option (1-7): ")
+        choice = input(PROMPT_CHOICE)
 
         if choice == "1":
             while True:
                 try:
-                    s_id = int(input("Enter Student ID (Numbers only): "))
+                    s_id = int(input(PROMPT_STUDENT_ID))
                     break
                 except ValueError:
-                    print("Error: Student ID must be a whole number. Try again.")
+                    print(MSG_ID_NOT_NUMBER)
             
-            name = input("Enter Name: ")
+            name = input(PROMPT_NAME)
             try:
-                age = int(input("Enter Age: "))
-                grade = float(input("Enter Grade: "))
+                age = int(input(PROMPT_AGE))
+                grade = float(input(PROMPT_GRADE))
                 service.add_student(s_id, name, age, grade)
             except ValueError:
-                print("Error: Age and Grade must be valid numbers.")
+                print(MSG_AGE_GRADE_ERROR)
 
         elif choice == "2":
             students = service.get_all_students()
             if not students:
-                print("No students in the system")
+                print(MSG_NO_STUDENTS)
             else:
-                print("\n-------------- Students Details -------------")
+                print(DISPLAY_HEADER)
                 for s in students:
                     print(f"ID: {s.student_id} | Name: {s.name} | Age: {s.age} | Grade: {s.grade}")
 
         elif choice == "3":
             while True:
                 try:
-                    s_id = int(input("Enter Student ID (Numbers only): "))
+                    s_id = int(input(PROMPT_STUDENT_ID))
                     break
                 except ValueError:
-                    print("Error: Student ID must be a whole number. Try again.")
+                    print(MSG_ID_NOT_NUMBER)
             service.update_student(s_id)
 
         elif choice == "4":
             while True:
                 try:
-                    s_id = int(input("Enter the ID of the student to remove: "))
+                    s_id = int(input(PROMPT_REMOVE_ID))
                     break
                 except ValueError:
-                    print("Error: Student ID must be a whole number. Try again.")
+                    print(MSG_ID_NOT_NUMBER)
             service.delete_student(s_id)
 
         elif choice == "5":
             service.sort_students()
             students = service.get_all_students()
             if students:
-                print("\n-------------- Students Details -------------")
+                print(DISPLAY_HEADER)
                 for s in students:
                     print(f"ID: {s.student_id} | Name: {s.name} | Age: {s.age} | Grade: {s.grade}")
 
         elif choice == "6":
             top = service.get_top_students()
             if not top:
-                print("No students have a grade of 85 or higher.")
+                print(MSG_NO_TOP_STUDENTS)
             else:
-                print("\n--- Top Students (Grade >= 85) ---")
+                print(DISPLAY_TOP_HEADER)
                 for s in top:
                     print(f"{s.name}: {s.grade}")
 
         elif choice == "7":
-            print("Shutting down system...")
+            print(MSG_SHUTDOWN)
             break
 
         else:
-            print("Invalid choice. Please select a valid number.")
+            print(MSG_INVALID_CHOICE)
 
 
 if __name__ == "__main__":
