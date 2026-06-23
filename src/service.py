@@ -9,9 +9,6 @@ from constants import (
     MSG_NO_STUDENTS_TO_SORT,
     MSG_SORTED,
     MSG_UPDATING,
-    PROMPT_NEW_NAME,
-    PROMPT_NEW_AGE,
-    PROMPT_NEW_GRADE,
     MSG_INVALID_FIELD_VALUE
 )
 

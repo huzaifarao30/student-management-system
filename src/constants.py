@@ -14,8 +14,8 @@ MSG_ID_NOT_NUMBER = "Error: Student ID must be a whole number. Try again."
 MSG_AGE_GRADE_ERROR = "Error: Age and Grade must be valid numbers."
 MSG_LOADING_ERROR = "Loading error: {}"
 MSG_SAVE_ERROR = "Error saving to file: {}"
-MSG_SORTED = "Roster sorted by highest grade first."          # ← Added
-MSG_UPDATING = "Updating data for {} (Leave blank if you don't want to change)"  # ← Added
+MSG_SORTED = "Roster sorted by highest grade first."         
+MSG_UPDATING = "Updating data for {} (Leave blank if you don't want to change)" 
 
 # Menu
 MENU_TITLE = "\n---------------- Student Management System ---------------------"
