@@ -1,6 +1,6 @@
-from repository import StudentRepository
-from service import StudentService
-from constants import (
+from src.repository import StudentRepository
+from src.service import StudentService
+from src.constants import (
     MENU_TITLE, MENU_ADD, MENU_VIEW, MENU_UPDATE, MENU_DELETE,
     MENU_SORT, MENU_TOP, MENU_EXIT, PROMPT_CHOICE, MSG_NO_STUDENTS,
     MSG_INVALID_CHOICE, MSG_SHUTDOWN, MSG_ID_NOT_NUMBER,MSG_NO_TOP_STUDENTS,

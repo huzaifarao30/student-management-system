@@ -1,6 +1,6 @@
-from repository import StudentRepository
-from models import Student
-from constants import (
+from .repository import StudentRepository
+from .models import Student
+from .constants import (
     MSG_ID_EXISTS, 
     MSG_STUDENT_ADDED, 
     MSG_STUDENT_NOT_FOUND,

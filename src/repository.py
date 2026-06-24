@@ -1,6 +1,6 @@
 import os
 import json
-from models import Student
+from .models import Student
 
 class StudentRepository:
     def __init__(self, filename="Studentlist.json"):
